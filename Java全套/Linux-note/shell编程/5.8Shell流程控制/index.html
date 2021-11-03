@@ -1,0 +1,2364 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Shell 流程控制 - Kirk Lin的个人学习笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#shell" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Kirk Lin的个人学习笔记" class="md-header__button md-logo" aria-label="Kirk Lin的个人学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kirk Lin的个人学习笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Shell 流程控制
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Kirk Lin的个人学习笔记" class="md-nav__button md-logo" aria-label="Kirk Lin的个人学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Kirk Lin的个人学习笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        笔记导航
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          GitHub新手指南
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GitHub新手指南" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          GitHub新手指南
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GitHub%E6%96%B0%E6%89%8B%E6%8C%87%E5%8D%97/GitHub%E6%96%B0%E6%89%8B%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        GitHub是啥玩意？
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Java全套
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java全套" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Java全套
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          JDBC核心技术
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JDBC核心技术" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          JDBC核心技术
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        JDBC核心技术
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Java基础笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java基础笔记" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Java基础笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B8%AD%E7%B1%BB%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" class="md-nav__link">
+        Java中类的那些事
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8BIO%E6%B5%81/" class="md-nav__link">
+        Java之IO流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8BJava-8%E6%96%B0%E7%89%B9%E6%80%A7/" class="md-nav__link">
+        Java之Java 8新特性
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        Java之关键字的使用
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        Java之反射
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        Java之基本语法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        Java之多线程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E5%B8%B8%E7%94%A8%E7%B1%BB/" class="md-nav__link">
+        Java之常用类
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" class="md-nav__link">
+        Java之异常处理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E6%95%B0%E7%BB%84/" class="md-nav__link">
+        Java之数组
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%92%8C%E6%B3%A8%E8%A7%A3/" class="md-nav__link">
+        Java之枚举类和注解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E6%B3%9B%E5%9E%8B/" class="md-nav__link">
+        Java之泛型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E7%BB%86%E8%AF%B4%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%89%E5%A4%A7%E7%89%B9%E5%BE%81/" class="md-nav__link">
+        Java之细说面向对象三大特征
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        Java之网络编程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E4%B9%8B%E9%9B%86%E5%90%88/" class="md-nav__link">
+        Java之集合
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0%E5%AF%BC%E8%88%AA/" class="md-nav__link">
+        Java基础笔记大纲
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Linux note
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux note" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Linux note
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux%E7%AC%94%E8%AE%B0%E5%AF%BC%E8%88%AA/" class="md-nav__link">
+        Linux笔记导航
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_2" type="checkbox" id="__nav_3_3_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3_2">
+          Shell编程
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Shell编程" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Shell编程
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.10%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91/" class="md-nav__link">
+        Shell 输入/输出重定向
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.11shell%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="md-nav__link">
+        Shell 文件包含
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.1Shell%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        Shell简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.2Shell%E5%8F%98%E9%87%8F/" class="md-nav__link">
+        Shell变量
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.3Shell%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="md-nav__link">
+        Shell 字符串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.4Shell%E6%95%B0%E7%BB%84/" class="md-nav__link">
+        Shell数组
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.5Shell%E8%BF%90%E7%AE%97%E7%AC%A6/" class="md-nav__link">
+        Shell运算符
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.6Shell%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+        Shell打印输出命令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.7Shelltest%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+        Shell test 命令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Shell 流程控制
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Shell 流程控制
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 判断语句
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 判断语句">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-if" class="md-nav__link">
+    1.1 if判断
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-case" class="md-nav__link">
+    1.2 case语句
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 循环语句
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 循环语句">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-for" class="md-nav__link">
+    2.1 for循环
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-while" class="md-nav__link">
+    2.2 while 语句
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-until" class="md-nav__link">
+    2.3 until循环
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 跳出循环
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 跳出循环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-break" class="md-nav__link">
+    2.4.1 break命令
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-continue" class="md-nav__link">
+    2.4.2 continue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.9Shell%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        Shell 函数
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_3" type="checkbox" id="__nav_3_3_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3_3">
+          课程笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程笔记" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          课程笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/1.1Linux%E8%AF%BE%E7%A8%8B%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        1.1Linux课程介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.1Linux%E5%85%A5%E9%97%A8/" class="md-nav__link">
+        2.1Linux入门
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.2Linux%E5%AE%89%E8%A3%85/" class="md-nav__link">
+        Linux安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.3Linux%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        2.3Linux目录结构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.10%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        3.10进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.11%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%28RPM%E5%92%8CYUM%29/" class="md-nav__link">
+        3.11包管理工具(RPM和YUM)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.1%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        3.1远程登录Linux系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.2vi%E5%92%8Cvim%E7%BC%96%E8%BE%91%E5%99%A8/" class="md-nav__link">
+        3.2vi和vim编辑器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.3%E5%85%B3%E6%9C%BA%E3%80%81%E9%87%8D%E5%90%AF%E5%92%8C%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B3%A8%E9%94%80/" class="md-nav__link">
+        3.3关机、重启和用户登录注销
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.4%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        3.4用户管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.5%E5%AE%9E%E7%94%A8%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        3.5实用指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.6%E7%BB%84%E7%AE%A1%E7%90%86%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        3.6组管理和权限管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.7%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        3.7定时任务调度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.8Linux%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E3%80%81%E6%8C%82%E8%BD%BD%E5%BA%A6/" class="md-nav__link">
+        3.8Linux磁盘分区、挂载度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.9%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        3.9网络配置
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          编码规范
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编码规范" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          编码规范
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E8%A7%84%E8%8C%83/" class="md-nav__link">
+        代码风格规范
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          前端全套
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="前端全套" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          前端全套
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          JavaScript
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JavaScript" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          JavaScript
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E5%89%8D%E7%AB%AF%E5%85%A8%E5%A5%97/JavaScript/JavaScript%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        JavaScript基础
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          竞赛指南
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="竞赛指南" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          竞赛指南
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          算法竞赛
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法竞赛" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          算法竞赛
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E7%AB%9E%E8%B5%9B%E6%8C%87%E5%8D%97/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF/" class="md-nav__link">
+        快速排序算法模板
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E7%AB%9E%E8%B5%9B%E6%8C%87%E5%8D%97/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/%E7%94%B1%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4%E5%8F%8D%E6%8E%A8%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%BB%A5%E5%8F%8A%E7%AE%97%E6%B3%95%E5%86%85%E5%AE%B9/" class="md-nav__link">
+        由数据范围反推算法复杂度以及算法内容
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          软件测试大赛
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="软件测试大赛" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          软件测试大赛
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E7%AB%9E%E8%B5%9B%E6%8C%87%E5%8D%97/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%A7%E8%B5%9B/%E8%AF%A6%E8%A7%A3%E4%BB%8B%E7%BB%8DSelenium%E5%B8%B8%E7%94%A8API%E7%9A%84%E4%BD%BF%E7%94%A8Java%E8%AF%AD%E8%A8%80/" class="md-nav__link">
+        详解介绍Selenium常用API的使用Java语言
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          计算机科学
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="计算机科学" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          计算机科学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1" type="checkbox" id="__nav_6_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6_1">
+          计算机操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="计算机操作系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          计算机操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/IO%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        I/O设备的机械部件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E7%AE%A1%E7%A8%8B/" class="md-nav__link">
+        信号量机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85/" class="md-nav__link">
+        内存空间的扩充
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        动态分区分配算法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5/" class="md-nav__link">
+        进程同步互斥
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%AF%E5%8A%A8%E3%80%81%E4%B8%AD%E6%96%AD%E3%80%81%E5%BC%82%E5%B8%B8%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        启动、中断、异常和系统调用
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        文件的逻辑结构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%AD%BB%E9%94%81%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/" class="md-nav__link">
+        死锁的概念
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%9A%E8%BF%9E%E7%BB%AD%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="md-nav__link">
+        物理内存管理：连续内存分配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%9A%E9%9D%9E%E8%BF%9E%E7%BB%AD%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="md-nav__link">
+        物理内存管理：非连续内存分配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0%E5%AF%BC%E8%88%AA/" class="md-nav__link">
+        计算机操作系统理论笔记大纲
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        进程和线程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        进程调度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        进程调度算法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95%E4%B8%8E%E9%A1%B5%E9%9D%A2%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/" class="md-nav__link">
+        页面置换算法与页面分配策略
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 判断语句
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 判断语句">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-if" class="md-nav__link">
+    1.1 if判断
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-case" class="md-nav__link">
+    1.2 case语句
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 循环语句
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 循环语句">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-for" class="md-nav__link">
+    2.1 for循环
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-while" class="md-nav__link">
+    2.2 while 语句
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-until" class="md-nav__link">
+    2.3 until循环
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 跳出循环
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 跳出循环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-break" class="md-nav__link">
+    2.4.1 break命令
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-continue" class="md-nav__link">
+    2.4.2 continue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="shell">Shell 流程控制</h1>
+<h2 id="1">1. 判断语句</h2>
+<h3 id="11-if">1.1 if判断</h3>
+<ul>
+<li>if else-if else 语法格式：</li>
+</ul>
+<pre><code class="language-sh">if condition1
+then
+    command1
+elif condition2
+then
+    command2
+else
+    commandN
+fi
+</code></pre>
+<ul>
+<li>或者：</li>
+</ul>
+<pre><code class="language-sh">if [ 条件判断式 ];then
+
+程序
+
+fi
+</code></pre>
+<ul>
+<li>以下实例判断两个变量是否相等:</li>
+</ul>
+<pre><code class="language-sh">a=10
+b=20
+if [ $a == $b ]
+then
+   echo &quot;a 等于 b&quot;
+elif [ $a -gt $b ]
+then
+   echo &quot;a 大于 b&quot;
+elif [ $a -lt $b ]
+then
+   echo &quot;a 小于 b&quot;
+else
+   echo &quot;没有符合的条件&quot;
+fi
+# a 小于 b
+</code></pre>
+<ul>
+<li><strong><code>注意：</code></strong> 和Java、PHP等语言不一样，sh的流程控制不可为空。如果else分支没有语句执行，就不要写这个else。</li>
+</ul>
+<h3 id="12-case">1.2 case语句</h3>
+<ul>
+<li>Shell case语句为多选择语句。可以用case语句匹配一个值与一个模式，如果匹配成功，执行相匹配的命令。case语句格式如下：</li>
+</ul>
+<pre><code class="language-sh">case 值 in
+模式1)
+    command1
+    command2
+    commandN
+    ;;
+模式2）
+    command1
+    command2
+    commandN
+    ;;
+esac
+</code></pre>
+<ul>
+<li>case工作方式如上所示。取值后面必须为单词in，每一模式必须以右括号结束。取值可以为变量或常数。匹配发现取值符合某一模式后，其间所有命令开始执行直至 ;;。</li>
+<li>取值将检测匹配的每一个模式。一旦模式匹配，则执行完匹配模式相应命令后不再继续其他模式。如果无一匹配模式，使用星号 * 捕获该值，再执行后面的命令。</li>
+<li>下面的脚本提示输入1到4，与每一种模式进行匹配：</li>
+</ul>
+<pre><code class="language-sh">echo '输入 1 到 4 之间的数字:'
+echo '你输入的数字为:'
+read aNum
+case $aNum in
+    1)  echo '你选择了 1'
+    ;;
+    2)  echo '你选择了 2'
+    ;;
+    3)  echo '你选择了 3'
+    ;;
+    4)  echo '你选择了 4'
+    ;;
+    *)  echo '你没有输入 1 到 4 之间的数字'
+    ;;
+esac
+</code></pre>
+<ul>
+<li>输入不同的内容，会有不同的结果，例如：</li>
+</ul>
+<pre><code class="language-sh">#输入 1 到 4 之间的数字:
+#你输入的数字为:
+#3
+#你选择了 3
+</code></pre>
+<h2 id="2">2. 循环语句</h2>
+<h3 id="21-for">2.1 for循环</h3>
+<ul>
+<li>for循环一般格式为：</li>
+</ul>
+<pre><code class="language-sh">for var in item1 item2 ... itemN
+do
+    command1
+    command2
+    ...
+    commandN
+done
+</code></pre>
+<ul>
+<li>写成一行：</li>
+</ul>
+<pre><code class="language-sh">for var in item1 item2 ... itemN; do command1; command2… done;
+</code></pre>
+<ul>
+<li>当变量值在列表里，for循环即执行一次所有命令，使用变量名获取列表中的当前取值。命令可为任何有效的shell命令和语句。in列表可以包含替换、字符串和文件名。</li>
+<li>in列表是可选的，如果不用它，for循环使用命令行的位置参数。</li>
+<li>例如，顺序输出当前列表中的数字：</li>
+</ul>
+<pre><code class="language-sh">for loop in 1 2 3 4 5
+do
+    echo &quot;The value is: $loop&quot;
+done
+# The value is: 1
+# The value is: 2
+# The value is: 3
+# The value is: 4
+# The value is: 5
+</code></pre>
+<h3 id="22-while">2.2 while 语句</h3>
+<ul>
+<li>while循环用于不断执行一系列命令，也用于从输入文件中读取数据；命令通常为测试条件。其格式为：</li>
+</ul>
+<pre><code class="language-sh">while condition
+do
+    command
+done
+</code></pre>
+<ul>
+<li>以下是一个基本的while循环，测试条件是：如果int小于等于5，那么条件返回真。int从0开始，每次循环处理时，int加1。运行上述脚本，返回数字1到5，然后终止。</li>
+</ul>
+<pre><code class="language-sh">#!/bin/bash
+int=1
+while(( $int&lt;=5 ))
+do
+    echo $int
+    let &quot;int++&quot;
+done
+#运行脚本，输出：
+# 1
+# 2
+# 3
+# 4
+# 5
+</code></pre>
+<ul>
+<li>以上实例使用了 Bash let 命令，它用于执行一个或多个表达式，变量计算中不需要加上 $ 来表示变量，具体可查阅：<a href="https://www.runoob.com/linux/linux-comm-let.html">Bash let 命令</a></li>
+</ul>
+<h3 id="23-until">2.3 until循环</h3>
+<ul>
+<li>until 循环执行一系列命令直至条件为 true 时停止。</li>
+<li>until 循环与 while 循环在处理方式上刚好相反。</li>
+<li>一般 while 循环优于 until 循环，但在某些时候—也只是极少数情况下，until 循环更加有用。</li>
+<li>until 语法格式:</li>
+</ul>
+<pre><code class="language-sh">until condition
+do
+    command
+done
+</code></pre>
+<ul>
+<li>condition 一般为条件表达式，如果返回值为 false，则继续执行循环体内的语句，否则跳出循环。</li>
+<li>以下实例我们使用 until 命令来输出 0 ~ 9 的数字：</li>
+</ul>
+<pre><code class="language-sh">#!/bin/bash
+
+a=0
+
+until [ ! $a -lt 10 ]
+do
+   echo $a
+   a=`expr $a + 1`
+done
+</code></pre>
+<h3 id="24">2.4 跳出循环</h3>
+<ul>
+<li>在循环过程中，有时候需要在未达到循环结束条件时强制跳出循环，Shell使用两个命令来实现该功能：break和continue。</li>
+</ul>
+<h4 id="241-break">2.4.1 break命令</h4>
+<ul>
+<li>break命令允许跳出所有循环（终止执行后面的所有循环）。</li>
+<li>下面的例子中，脚本进入死循环直至用户输入数字大于5。要跳出这个循环，返回到shell提示符下，需要使用break命令。</li>
+</ul>
+<pre><code class="language-sh">#!/bin/bash
+while :
+do
+    echo -n &quot;输入 1 到 5 之间的数字:&quot;
+    read aNum
+    case $aNum in
+        1|2|3|4|5) echo &quot;你输入的数字为 $aNum!&quot;
+        ;;
+        *) echo &quot;你输入的数字不是 1 到 5 之间的! 游戏结束&quot;
+            break
+        ;;
+    esac
+done
+#执行以上代码，输出结果为：
+#
+#输入 1 到 5 之间的数字:3
+#你输入的数字为 3!
+#输入 1 到 5 之间的数字:7
+#你输入的数字不是 1 到 5 之间的! 游戏结束
+</code></pre>
+<h4 id="242-continue">2.4.2 continue</h4>
+<ul>
+<li>continue命令与break命令类似，只有一点差别，它不会跳出所有循环，仅仅跳出当前循环。
+对上面的例子进行修改：</li>
+</ul>
+<pre><code class="language-sh">#!/bin/bash
+while :
+do
+    echo -n &quot;输入 1 到 5 之间的数字: &quot;
+    read aNum
+    case $aNum in
+        1|2|3|4|5) echo &quot;你输入的数字为 $aNum!&quot;
+        ;;
+        *) echo &quot;你输入的数字不是 1 到 5 之间的!&quot;
+            continue
+            echo &quot;游戏结束&quot;
+        ;;
+    esac
+done
+
+#运行代码发现，当输入大于5的数字时，该例中的循环不会结束，语句 echo &quot;游戏结束&quot; 永远不会被执行。
+</code></pre>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../5.7Shelltest%E5%91%BD%E4%BB%A4/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Shell test 命令" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              Shell test 命令
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../5.9Shell%E5%87%BD%E6%95%B0/" class="md-footer__link md-footer__link--next" aria-label="下一页: Shell 函数" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              Shell 函数
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.indexes"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>

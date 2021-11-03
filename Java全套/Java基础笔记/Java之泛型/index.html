@@ -1,0 +1,3005 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Java之泛型 - Kirk Lin的个人学习笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#java" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Kirk Lin的个人学习笔记" class="md-header__button md-logo" aria-label="Kirk Lin的个人学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kirk Lin的个人学习笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Java之泛型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Kirk Lin的个人学习笔记" class="md-nav__button md-logo" aria-label="Kirk Lin的个人学习笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Kirk Lin的个人学习笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        笔记导航
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          GitHub新手指南
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GitHub新手指南" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          GitHub新手指南
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GitHub%E6%96%B0%E6%89%8B%E6%8C%87%E5%8D%97/GitHub%E6%96%B0%E6%89%8B%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        GitHub是啥玩意？
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Java全套
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java全套" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Java全套
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          JDBC核心技术
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JDBC核心技术" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          JDBC核心技术
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        JDBC核心技术
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Java基础笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Java基础笔记" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Java基础笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B8%AD%E7%B1%BB%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" class="md-nav__link">
+        Java中类的那些事
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8BIO%E6%B5%81/" class="md-nav__link">
+        Java之IO流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8BJava-8%E6%96%B0%E7%89%B9%E6%80%A7/" class="md-nav__link">
+        Java之Java 8新特性
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        Java之关键字的使用
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        Java之反射
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        Java之基本语法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        Java之多线程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E5%B8%B8%E7%94%A8%E7%B1%BB/" class="md-nav__link">
+        Java之常用类
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" class="md-nav__link">
+        Java之异常处理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E6%95%B0%E7%BB%84/" class="md-nav__link">
+        Java之数组
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%92%8C%E6%B3%A8%E8%A7%A3/" class="md-nav__link">
+        Java之枚举类和注解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Java之泛型
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Java之泛型
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、泛型简介
+  </a>
+  
+    <nav class="md-nav" aria-label="一、泛型简介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 泛型的概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 泛型的引入背景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3. 引入泛型的目的
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    二、泛型在集合中的应用
+  </a>
+  
+    <nav class="md-nav" aria-label="二、泛型在集合中的应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    1. 在集合中没有使用泛型的例子
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    2. 在集合中使用泛型的例子 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-2" class="md-nav__link">
+    3. 在集合中使用泛型例子 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4. 集合中使用泛型总结：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    三、自定义泛型结构
+  </a>
+  
+    <nav class="md-nav" aria-label="三、自定义泛型结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    1. 泛型的声明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    2. 泛型的实例化：
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    3. 注意点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    4. 自定义泛型结构
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 自定义泛型结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 自定义泛型类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2 自定义泛型接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3 自定义泛型方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    4.4 总结：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5. 泛型的应用场景
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    四、泛型在继承上的体现
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    五、通配符
+  </a>
+  
+    <nav class="md-nav" aria-label="五、通配符">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    1. 通配符的使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    2. 注意点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    3. 有限制的通配符
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E7%BB%86%E8%AF%B4%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%89%E5%A4%A7%E7%89%B9%E5%BE%81/" class="md-nav__link">
+        Java之细说面向对象三大特征
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        Java之网络编程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B9%8B%E9%9B%86%E5%90%88/" class="md-nav__link">
+        Java之集合
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0%E5%AF%BC%E8%88%AA/" class="md-nav__link">
+        Java基础笔记大纲
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Linux note
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux note" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Linux note
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/Linux%E7%AC%94%E8%AE%B0%E5%AF%BC%E8%88%AA/" class="md-nav__link">
+        Linux笔记导航
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_2" type="checkbox" id="__nav_3_3_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3_2">
+          Shell编程
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Shell编程" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Shell编程
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.10%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91/" class="md-nav__link">
+        Shell 输入/输出重定向
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.11shell%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="md-nav__link">
+        Shell 文件包含
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.1Shell%E7%AE%80%E4%BB%8B/" class="md-nav__link">
+        Shell简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.2Shell%E5%8F%98%E9%87%8F/" class="md-nav__link">
+        Shell变量
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.3Shell%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="md-nav__link">
+        Shell 字符串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.4Shell%E6%95%B0%E7%BB%84/" class="md-nav__link">
+        Shell数组
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.5Shell%E8%BF%90%E7%AE%97%E7%AC%A6/" class="md-nav__link">
+        Shell运算符
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.6Shell%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+        Shell打印输出命令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.7Shelltest%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+        Shell test 命令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.8Shell%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" class="md-nav__link">
+        Shell 流程控制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/shell%E7%BC%96%E7%A8%8B/5.9Shell%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        Shell 函数
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_3" type="checkbox" id="__nav_3_3_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3_3">
+          课程笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程笔记" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          课程笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/1.1Linux%E8%AF%BE%E7%A8%8B%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        1.1Linux课程介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.1Linux%E5%85%A5%E9%97%A8/" class="md-nav__link">
+        2.1Linux入门
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.2Linux%E5%AE%89%E8%A3%85/" class="md-nav__link">
+        Linux安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.3Linux%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        2.3Linux目录结构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.10%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        3.10进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.11%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%28RPM%E5%92%8CYUM%29/" class="md-nav__link">
+        3.11包管理工具(RPM和YUM)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.1%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        3.1远程登录Linux系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.2vi%E5%92%8Cvim%E7%BC%96%E8%BE%91%E5%99%A8/" class="md-nav__link">
+        3.2vi和vim编辑器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.3%E5%85%B3%E6%9C%BA%E3%80%81%E9%87%8D%E5%90%AF%E5%92%8C%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B3%A8%E9%94%80/" class="md-nav__link">
+        3.3关机、重启和用户登录注销
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.4%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        3.4用户管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.5%E5%AE%9E%E7%94%A8%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        3.5实用指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.6%E7%BB%84%E7%AE%A1%E7%90%86%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        3.6组管理和权限管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.7%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        3.7定时任务调度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.8Linux%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E3%80%81%E6%8C%82%E8%BD%BD%E5%BA%A6/" class="md-nav__link">
+        3.8Linux磁盘分区、挂载度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Linux-note/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.9%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        3.9网络配置
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          编码规范
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="编码规范" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          编码规范
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E8%A7%84%E8%8C%83/" class="md-nav__link">
+        代码风格规范
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          前端全套
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="前端全套" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          前端全套
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          JavaScript
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="JavaScript" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          JavaScript
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E5%89%8D%E7%AB%AF%E5%85%A8%E5%A5%97/JavaScript/JavaScript%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        JavaScript基础
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          竞赛指南
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="竞赛指南" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          竞赛指南
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          算法竞赛
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法竞赛" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          算法竞赛
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AB%9E%E8%B5%9B%E6%8C%87%E5%8D%97/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF/" class="md-nav__link">
+        快速排序算法模板
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AB%9E%E8%B5%9B%E6%8C%87%E5%8D%97/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/%E7%94%B1%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4%E5%8F%8D%E6%8E%A8%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%BB%A5%E5%8F%8A%E7%AE%97%E6%B3%95%E5%86%85%E5%AE%B9/" class="md-nav__link">
+        由数据范围反推算法复杂度以及算法内容
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          软件测试大赛
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="软件测试大赛" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          软件测试大赛
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%AB%9E%E8%B5%9B%E6%8C%87%E5%8D%97/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%A7%E8%B5%9B/%E8%AF%A6%E8%A7%A3%E4%BB%8B%E7%BB%8DSelenium%E5%B8%B8%E7%94%A8API%E7%9A%84%E4%BD%BF%E7%94%A8Java%E8%AF%AD%E8%A8%80/" class="md-nav__link">
+        详解介绍Selenium常用API的使用Java语言
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          计算机科学
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="计算机科学" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          计算机科学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1" type="checkbox" id="__nav_6_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6_1">
+          计算机操作系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="计算机操作系统" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          计算机操作系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/IO%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        I/O设备的机械部件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E7%AE%A1%E7%A8%8B/" class="md-nav__link">
+        信号量机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85/" class="md-nav__link">
+        内存空间的扩充
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        动态分区分配算法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5/" class="md-nav__link">
+        进程同步互斥
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%90%AF%E5%8A%A8%E3%80%81%E4%B8%AD%E6%96%AD%E3%80%81%E5%BC%82%E5%B8%B8%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        启动、中断、异常和系统调用
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        文件的逻辑结构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%AD%BB%E9%94%81%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/" class="md-nav__link">
+        死锁的概念
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%9A%E8%BF%9E%E7%BB%AD%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="md-nav__link">
+        物理内存管理：连续内存分配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%9A%E9%9D%9E%E8%BF%9E%E7%BB%AD%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="md-nav__link">
+        物理内存管理：非连续内存分配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0%E5%AF%BC%E8%88%AA/" class="md-nav__link">
+        计算机操作系统理论笔记大纲
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" class="md-nav__link">
+        进程和线程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        进程调度
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        进程调度算法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95%E4%B8%8E%E9%A1%B5%E9%9D%A2%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/" class="md-nav__link">
+        页面置换算法与页面分配策略
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、泛型简介
+  </a>
+  
+    <nav class="md-nav" aria-label="一、泛型简介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 泛型的概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 泛型的引入背景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3. 引入泛型的目的
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    二、泛型在集合中的应用
+  </a>
+  
+    <nav class="md-nav" aria-label="二、泛型在集合中的应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    1. 在集合中没有使用泛型的例子
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    2. 在集合中使用泛型的例子 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-2" class="md-nav__link">
+    3. 在集合中使用泛型例子 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4. 集合中使用泛型总结：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    三、自定义泛型结构
+  </a>
+  
+    <nav class="md-nav" aria-label="三、自定义泛型结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    1. 泛型的声明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    2. 泛型的实例化：
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    3. 注意点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    4. 自定义泛型结构
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 自定义泛型结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 自定义泛型类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2 自定义泛型接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3 自定义泛型方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    4.4 总结：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5. 泛型的应用场景
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    四、泛型在继承上的体现
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    五、通配符
+  </a>
+  
+    <nav class="md-nav" aria-label="五、通配符">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    1. 通配符的使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    2. 注意点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    3. 有限制的通配符
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div class="toc">
+<ul>
+<li><a href="#java">Java 之泛型</a><ul>
+<li><a href="#_1">一、泛型简介</a><ul>
+<li><a href="#1">1. 泛型的概念</a></li>
+<li><a href="#2">2. 泛型的引入背景</a></li>
+<li><a href="#3">3. 引入泛型的目的</a></li>
+</ul>
+</li>
+<li><a href="#_2">二、泛型在集合中的应用</a><ul>
+<li><a href="#1_1">1. 在集合中没有使用泛型的例子</a></li>
+<li><a href="#2-1">2. 在集合中使用泛型的例子 1</a></li>
+<li><a href="#3-2">3. 在集合中使用泛型例子 2</a></li>
+<li><a href="#4">4. 集合中使用泛型总结：</a></li>
+</ul>
+</li>
+<li><a href="#_3">三、自定义泛型结构</a><ul>
+<li><a href="#1_2">1. 泛型的声明</a></li>
+<li><a href="#2_1">2. 泛型的实例化：</a></li>
+<li><a href="#3_1">3. 注意点</a></li>
+<li><a href="#4_1">4. 自定义泛型结构</a><ul>
+<li><a href="#41">4.1 自定义泛型类</a></li>
+<li><a href="#42">4.2 自定义泛型接口</a></li>
+<li><a href="#43">4.3 自定义泛型方法</a></li>
+<li><a href="#44">4.4 总结：</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 泛型的应用场景</a></li>
+</ul>
+</li>
+<li><a href="#_4">四、泛型在继承上的体现</a></li>
+<li><a href="#_5">五、通配符</a><ul>
+<li><a href="#1_3">1. 通配符的使用</a></li>
+<li><a href="#2_2">2. 注意点</a></li>
+<li><a href="#3_2">3. 有限制的通配符</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="java">Java 之泛型</h1>
+<h2 id="_1">一、泛型简介</h2>
+<h3 id="1">1. 泛型的概念</h3>
+<ul>
+<li>所谓泛型，就是允许在定义类、接口时通过一个标识表示类中某个属性的类型或者是某个方法的返 回值及参数类型。这个类型参数将在使用时（例如，继承或实现这个接口，用这个类型声明变量、 创建对象时确定（即传入实际的类型参数，也称为类型实参）。</li>
+<li>从 JDK 5.0 以后，Java 引入了 “参数化类型(Parameterized type)” 的概念，允许我们在创建集合时再指定集合元素的类型，正如: List<String>，这表明该 List 只能保存字符串类型的对象。</li>
+<li>JDK 5.0 改写了集合框架中的全部接口和类，为这些接口、类增加了泛型支持，从而可以在声明集合变量、创建集合对象时传入类型实参。</li>
+</ul>
+<h3 id="2">2. 泛型的引入背景</h3>
+<p>集合容器类在设计阶段 / 声明阶段不能确定这个容器到底实际存的是什么类型的对象，所以在 JDK1.5 之前只能把元素类型设计为 Object，JDK1.5 之后使用泛型来解决。因为这个时候除了元素的类型不确定，其他的部分是确定的，例如关于这个元素如何保存，如何管理等是确定的，因此此时把元素的类型设计成一个参数，这个类型参数叫做泛型。Collection<E>，List<E>，ArrayList<E> 这个 &lt; E &gt; 就是类型参数，即泛型。</p>
+<h3 id="3">3. 引入泛型的目的</h3>
+<ol>
+<li>解决元素存储的安全性问题，好比商品、药品标签，不会弄错。</li>
+<li>解决获取数据元素时，需要类型强制转换的问题，好比不用每回拿商品、药品都要辨别。</li>
+</ol>
+<p>Java 泛型可以保证如果程序在编译时没有发岀警告，运行时就不会产生 ClassCastException 异常。同时，代码更加简洁、健壮。</p>
+<h2 id="_2">二、泛型在集合中的应用</h2>
+<h3 id="1_1">1. 在集合中没有使用泛型的例子</h3>
+<pre><code class="language-java">@Test
+public void test1(){
+    ArrayList list = new ArrayList();
+    //需求：存放学生的成绩
+    list.add(78);
+    list.add(76);
+    list.add(89);
+    list.add(88);
+    //问题一：类型不安全
+    //        list.add(&quot;Tom&quot;);
+
+    for(Object score : list){
+        //问题二：强转时，可能出现ClassCastException
+        int stuScore = (Integer) score;
+
+        System.out.println(stuScore);
+
+    }
+
+}
+</code></pre>
+<p>图示：</p>
+<p><img alt="img" src="../imgs/20200429224754.png" /></p>
+<h3 id="2-1">2. 在集合中使用泛型的例子 1</h3>
+<pre><code class="language-java">//在集合中使用泛型，以ArrayList为例
+@Test
+public void test1(){
+    ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+    list.add(&quot;AAA&quot;);
+    list.add(&quot;BBB&quot;);
+    list.add(&quot;FFF&quot;);
+    list.add(&quot;EEE&quot;);
+    list.add(&quot;CCC&quot;);
+    //遍历方式一：
+    Iterator&lt;String&gt; iterator = list.iterator();
+    while (iterator.hasNext()){
+        System.out.println(iterator.next());
+    }
+    System.out.println(&quot;-------------&quot;);
+    //便利方式二：
+    for (String str:
+         list) {
+        System.out.println(str);
+    }
+}
+</code></pre>
+<p>图示：</p>
+<p><img alt="img" src="../imgs/20200429224833.png" /></p>
+<h3 id="3-2">3. 在集合中使用泛型例子 2</h3>
+<pre><code class="language-java">@Test
+//在集合中使用泛型的情况：以HashMap为例
+public void test2(){
+    Map&lt;String,Integer&gt; map = new HashMap&lt;&gt;();//jdk7新特性：类型推断
+    map.put(&quot;Tom&quot;,26);
+    map.put(&quot;Jarry&quot;,30);
+    map.put(&quot;Bruce&quot;,28);
+    map.put(&quot;Davie&quot;,60);
+    //嵌套循环
+    Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entries = map.entrySet();
+    Iterator&lt;Map.Entry&lt;String, Integer&gt;&gt; iterator = entries.iterator();
+
+    while (iterator.hasNext()){
+        Map.Entry&lt;String, Integer&gt; entry = iterator.next();
+        String key = entry.getKey();
+        Integer value = entry.getValue();
+        System.out.println(key+&quot;=&quot;+value);
+    }
+
+}
+</code></pre>
+<h3 id="4">4. 集合中使用泛型总结：</h3>
+<p>① 集合接口或集合类在 JDK 5.0 时都修改为带泛型的结构。</p>
+<p>② 在实例化集合类时，可以指明具体的泛型类型</p>
+<p>③ 指明完以后，在集合类或接口中凡是定义类或接口时，内部结构（比如：方法、构造器、属性等）使用到类的泛型的位置，都指定为实例化的泛型类型。</p>
+<p>比如：add(E e) ---&gt; 实例化以后：add(Integer e)</p>
+<p>④ 注意点：泛型的类型必须是类，不能是基本数据类型。需要用到基本数据类型的位置，拿包装类替换</p>
+<p>⑤ 如果实例化时，没有指明泛型的类型。默认类型为 java.lang.Object 类型。</p>
+<h2 id="_3">三、自定义泛型结构</h2>
+<p>泛型类、泛型接口、泛型方法</p>
+<h3 id="1_2">1. 泛型的声明</h3>
+<ul>
+<li>interface List<T> 和 class GenTest<K,V > 其中，T，K，V，不代表值，而是表示类型。这里使用任意字母都可以。</li>
+<li>常用 T 表示，是 Type 的缩写。</li>
+</ul>
+<h3 id="2_1">2. 泛型的实例化：</h3>
+<p>一定要在类名后面指定类型参数的值（类型）。如：</p>
+<p>List<String> strList =new ArrayList<String>();</p>
+<p>Iterator<Customer> iterator = customers.iterator();</p>
+<ul>
+<li>T 只能是类，不能用基本数据类型填充。但可以使用包装类填充</li>
+<li>把一个集合中的内容限制为一个特定的数据类型，这就是 generics 背后的核心思想</li>
+</ul>
+<pre><code class="language-java">//JDK 5.0以前
+Comparable c = new Date();
+System.out.println(c.comparaTo(&quot;red&quot;);
+
+//JDK 5.0以后
+Comparable &lt;Date&gt; c = new Date();
+System.out.println(c.comparaTo(&quot;red&quot;);
+</code></pre>
+<p>总结：使用泛型的主要优点在于能够在编译时而不是在运行时检测错误</p>
+<h3 id="3_1">3. 注意点</h3>
+<ol>
+<li>
+<p>泛型类可能有多个参数，此时应将多个参数一起放在尖括号内。比如 <E1,E2,E3></p>
+</li>
+<li>
+<p>泛型类的构造器如下： public GenericClass(){}</p>
+</li>
+</ol>
+<p>而下面是错误的： public GenericClass<E>{}</p>
+<ol>
+<li>
+<p>实例化后，操作原来泛型位置的结构必须与指定的泛型类型一致。</p>
+</li>
+<li>
+<p>泛型不同的引用不能相互赋值。</p>
+</li>
+</ol>
+<p>尽管在编译时 ArrayList<String> 和 ArrayList<Integer > 是两种类型，但是，在运行时只有一个 ArrayList 被加载到 JVM 中。</p>
+<ol>
+<li>泛型如果不指定，将被擦除，泛型对应的类型均按照 Object 处理，但不等价于 Object。</li>
+</ol>
+<p>建议：泛型要使用一路都用。要不用，一路都不要用。</p>
+<ol>
+<li>
+<p>如果泛型结构是一个接口或抽象类，则不可创建泛型类的对象。</p>
+</li>
+<li>
+<p>JDK 7.0，泛型的简化操作： ArrayList<Fruit>first= new ArrayList&lt;&gt;();（类型推断）</p>
+</li>
+<li>
+<p>泛型的指定中不能使用基本数据类型，可以使用包装类替换。</p>
+</li>
+<li>
+<p>在类 / 接口上声明的泛型，在本类或本接口中即代表某种类型，可以作为非静态属性的类型、非静态方法的参数类型、非静态方法的返回值类型。但在静态方法中不能使用类的泛型。</p>
+</li>
+<li>
+<p>异常类不能是泛型的。</p>
+</li>
+<li>
+<p>不能使用 new E[]。但是可以：E[] elements= (E[])new Object[capacity];</p>
+<p>参考：ArrayList 源码中声明：Object[] elementData，而非泛型参数类型数组。</p>
+</li>
+<li>
+<p>父类有泛型，子类可以选择保留泛型也可以选择指定泛型类型：</p>
+<ul>
+<li>子类不保留父类的泛型：按需实现</li>
+<li>没有类型 --- 擦除</li>
+<li>具体类型</li>
+<li>子类保留父类的泛型：泛型子类</li>
+<li>全部保留</li>
+<li>部分保留</li>
+<li>结论：子类必须是 “富二代”，子类除了指定或保留父类的泛型，还可以增加自己的泛型</li>
+</ul>
+</li>
+</ol>
+<p>代码示例：</p>
+<pre><code class="language-java">class Father&lt;T1, T2&gt; {
+}
+
+/**
+ * 定义泛型子类Son
+ * 情况一：继承泛型父类后不保留父类的泛型
+ */
+//1.没有指明类型  擦除
+class Son1&lt;A, B&gt; extends Father {//等价于class Son1 extends Father&lt;Object,Odject&gt;{}
+}
+
+//2.指定具体类型
+class Son2&lt;A, B&gt; extends Father&lt;Integer, String&gt; {
+}
+
+/**
+ * 定义泛型子类Son
+ * 情况二：继承泛型父类后保留泛型类型
+ */
+//1.全部保留
+class Son3&lt;T1, T2, A, B&gt; extends Father&lt;T1, T2&gt; {
+}
+
+//2.部分保留
+class Son4&lt;T2, A, B&gt; extends Father&lt;Integer,T2&gt;{
+}
+</code></pre>
+<h3 id="4_1">4. 自定义泛型结构</h3>
+<h4 id="41">4.1 自定义泛型类</h4>
+<p>代码示例：</p>
+<pre><code class="language-java">/**
+ * 自定义泛型类Order
+ */
+class Order&lt;T&gt; {
+    private String orderName;
+    private int orderId;
+    //使用T类型定义变量
+    private T orderT;
+
+    public Order() {
+    }
+    //使用T类型定义构造器
+    public Order(String orderName, int orderId, T orderT) {
+        this.orderName = orderName;
+        this.orderId = orderId;
+        this.orderT = orderT;
+    }
+
+    //这个不是泛型方法
+    public T getOrderT() {
+        return orderT;
+    }
+    //这个不是泛型方法
+    public void setOrderT(T orderT) {
+        this.orderT = orderT;
+    }
+    //这个不是泛型方法
+    @Override
+    public String toString() {
+        return &quot;Order{&quot; +
+                &quot;orderName='&quot; + orderName + '\'' +
+                &quot;, orderId=&quot; + orderId +
+                &quot;, orderT=&quot; + orderT +
+                '}';
+    }
+//    //静态方法中不能使用类的泛型。
+//    public static void show(T orderT){
+//        System.out.println(orderT);
+//    }
+
+//    //try-catch中不能是泛型的。
+//    public void show(){
+//        try {
+//
+//        }catch (T t){
+//
+//        }
+//    }
+
+    //泛型方法：在方法中出现了泛型的结构，泛型参数与类的泛型参数没有任何关系。
+    //换句话说，泛型方法所属的类是不是泛型类都没有关系。
+    //泛型方法，可以声明为静态的。
+    // 原因：泛型参数是在调用方法时确定的。并非在实例化类时确定。
+    public static &lt;E&gt; List&lt;E&gt; copyFromArryToList(E[] arr) {
+        ArrayList&lt;E&gt; list = new ArrayList&lt;&gt;();
+        for (E e :
+                list) {
+            list.add(e);
+        }
+        return list;
+    }
+}
+</code></pre>
+<p>自定义泛型类 Order 的使用</p>
+<pre><code class="language-java">@Test
+public void test1() {
+    //如果定义了泛型类，实例化没有指明类的泛型，则认为此泛型类型为Object类型
+    //要求：如果大家定义了类是带泛型的，建议在实例化时要指明类的泛型。
+    Order order = new Order();
+    order.setOrderT(123);
+    System.out.println(order.getOrderT());
+
+    order.setOrderT(&quot;abc&quot;);
+    System.out.println(order.getOrderT());
+
+    //建议：实例化时指明类的泛型
+    Order&lt;String&gt; order1 = new Order&lt;&gt;(&quot;Tom&quot;, 16, &quot;male&quot;);
+    order1.setOrderT(&quot;AA:BBB&quot;);
+    System.out.println(order1.getOrderT());
+}
+
+@Test
+//调用泛型方法
+public void test2(){
+    Order&lt;String&gt; order = new Order&lt;&gt;();
+    Integer [] arr = new Integer[]{1,2,3,4,5,6};
+
+    List&lt;Integer&gt; list = order.copyFromArryToList(arr);
+    System.out.println(list);
+}
+</code></pre>
+<h4 id="42">4.2 自定义泛型接口</h4>
+<p>代码示例：</p>
+<pre><code class="language-java">/**
+ * 自定义泛型接口
+ */
+public interface DemoInterface &lt;T&gt; {
+    void show();
+    int size();
+}
+
+//实现泛型接口
+public class Demo implements DemoInterface {
+    @Override
+    public void show() {
+        System.out.println(&quot;hello&quot;);
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+}
+
+@Test
+//测试泛型接口
+public void test3(){
+    Demo demo = new Demo();
+    demo.show();
+}
+</code></pre>
+<h4 id="43">4.3 自定义泛型方法</h4>
+<ul>
+<li>方法，也可以被泛型化，不管此时定义在其中的类是不是泛型类。在泛型方法中可以定义泛型参数，此时，参数的类型就是传入数据的类型。</li>
+<li>泛型方法的格式： [访问权限]&lt;泛型&gt;返回类型 方法名 (泛型标识 参数名称]) 抛出的异常</li>
+<li>泛型方法声明泛型时也可以指定上限</li>
+</ul>
+<p>代码示例：</p>
+<pre><code class="language-java">//泛型方法：在方法中出现了泛型的结构，泛型参数与类的泛型参数没有任何关系。
+//换句话说，泛型方法所属的类是不是泛型类都没有关系。
+//泛型方法，可以声明为静态的。
+// 原因：泛型参数是在调用方法时确定的。并非在实例化类时确定。
+public static &lt;E&gt; List&lt;E&gt; copyFromArryToList(E[] arr) {
+    ArrayList&lt;E&gt; list = new ArrayList&lt;&gt;();
+    for (E e :
+         list) {
+        list.add(e);
+    }
+    return list;
+}
+</code></pre>
+<h4 id="44">4.4 总结：</h4>
+<ul>
+<li>泛型实际上就是标签，声明时不知道类型，再使用时指明</li>
+<li>定义泛型结构，即：泛型类、接口、方法、构造器时贴上泛型的标签 <T></li>
+<li>用泛型定义类或借口是 <T> 放到类名或接口名后面，定义泛型方法时在方法名前加上 &lt; T&gt;</li>
+</ul>
+<h3 id="5">5. 泛型的应用场景</h3>
+<p>【DAO.java】: 定义了操作数据库中的表的通用操作。 ORM 思想 (数据库中的表和 Java 中的类对应)</p>
+<pre><code class="language-java">public class DAO&lt;T&gt; {//表的共性操作的DAO
+
+    //添加一条记录
+    public void add(T t){
+
+    }
+
+    //删除一条记录
+    public boolean remove(int index){
+
+        return false;
+    }
+
+    //修改一条记录
+    public void update(int index,T t){
+
+    }
+
+    //查询一条记录
+    public T getIndex(int index){
+
+        return null;
+    }
+
+    //查询多条记录
+    public List&lt;T&gt; getForList(int index){
+
+        return null;
+    }
+
+    //泛型方法
+    //举例：获取表中一共有多少条记录？获取最大的员工入职时间？
+    public &lt;E&gt; E getValue(){
+
+        return null;
+    }
+
+}
+</code></pre>
+<p>【CustomerDAO.java】:</p>
+<pre><code class="language-java">public class CustomerDAO extends DAO&lt;Customer&gt;{//只能操作某一个表的DAO
+}
+</code></pre>
+<p>【StudentDAO.java】:</p>
+<pre><code class="language-java">public class StudentDAO extends DAO&lt;Student&gt; {//只能操作某一个表的DAO
+}
+</code></pre>
+<h2 id="_4">四、泛型在继承上的体现</h2>
+<p>泛型在继承方面的体现：</p>
+<p>虽然类 A 是类 B 的父类，但是 G<A> 和 G<B > 二者不具备子父类关系，二者是并列关系。</p>
+<p>补充：类 A 是类 B 的父类，A<G> 是 B<G> 的父类</p>
+<p>代码示例：</p>
+<pre><code class="language-java">@Test
+public void test1(){
+
+    Object obj = null;
+    String str = null;
+    obj = str;
+
+    Object[] arr1 = null;
+    String[] arr2 = null;
+    arr1 = arr2;
+    //编译不通过
+    //        Date date = new Date();
+    //        str = date;
+    List&lt;Object&gt; list1 = null;
+    List&lt;String&gt; list2 = new ArrayList&lt;String&gt;();
+    //此时的list1和list2的类型不具子父类关系
+    //编译不通过
+    //        list1 = list2;
+    /*
+        反证法：
+        假设list1 = list2;
+           list1.add(123);导致混入非String的数据。出错。
+
+         */
+
+    show(list1);
+    show1(list2);
+}
+
+public void show1(List&lt;String&gt; list){
+
+}
+
+public void show(List&lt;Object&gt; list){
+
+}
+
+@Test
+public void test2(){
+
+    AbstractList&lt;String&gt; list1 = null;
+    List&lt;String&gt; list2 = null;
+    ArrayList&lt;String&gt; list3 = null;
+
+    list1 = list3;
+    list2 = list3;
+
+    List&lt;String&gt; list4 = new ArrayList&lt;&gt;();
+
+}
+</code></pre>
+<h2 id="_5">五、通配符</h2>
+<h3 id="1_3">1. 通配符的使用</h3>
+<ol>
+<li>使用类型通配符：?</li>
+</ol>
+<p>比如：List&lt;?&gt;，Map&lt;?,?&gt;</p>
+<p>List&lt;?&gt; 是 List<String>、List<Object > 等各种泛型 List 的父类。</p>
+<ol>
+<li>
+<p>读取 List&lt;?&gt; 的对象 list 中的元素时，永远是安全的，因为不管 list 的真实类型是什么，它包含的都是 Object</p>
+</li>
+<li>
+<p>写入 list 中的元素时，不可以。因为我们不知道 c 的元素类型，我们不能向其中添加对象。 除了添加 null 之外。</p>
+</li>
+</ol>
+<p>说明：</p>
+<ul>
+<li>将任意元素加入到其中不是类型安全的</li>
+</ul>
+<p>Collection&lt;?&gt; c = new ArrayList<String>()</p>
+<p>c.add(new Object());// 编译时错误</p>
+<p>因为我们不知道 c 的元素类型，我们不能向其中添加对象。add 方法有类型参数 E 作为集合的元素类型。我们传给 add 的任何参数都必须是一个已知类型的子类。因为我们不知道那是什么类型，所以我们无法传任何东西进去。</p>
+<ul>
+<li>
+<p>唯一的例外的是 null，它是所有类型的成员。</p>
+</li>
+<li>
+<p>我们可以调用 get() 方法并使用其返回值。返回值是一个未知的类型，但是我们知道，它总是一个 Object。</p>
+</li>
+</ul>
+<p>代码示例:</p>
+<pre><code class="language-java">@Test
+public void test3(){
+    List&lt;Object&gt; list1 = null;
+    List&lt;String&gt; list2 = null;
+
+    List&lt;?&gt; list = null;
+
+    list = list1;
+    list = list2;
+    //编译通过
+    //        print(list1);
+    //        print(list2);
+
+    //
+    List&lt;String&gt; list3 = new ArrayList&lt;&gt;();
+    list3.add(&quot;AA&quot;);
+    list3.add(&quot;BB&quot;);
+    list3.add(&quot;CC&quot;);
+    list = list3;
+    //添加(写入)：对于List&lt;?&gt;就不能向其内部添加数据。
+    //除了添加null之外。
+    //        list.add(&quot;DD&quot;);
+    //        list.add('?');
+
+    list.add(null);
+
+    //获取(读取)：允许读取数据，读取的数据类型为Object。
+    Object o = list.get(0);
+    System.out.println(o);
+}
+
+public void print(List&lt;?&gt; list){
+    Iterator&lt;?&gt; iterator = list.iterator();
+    while(iterator.hasNext()){
+        Object obj = iterator.next();
+        System.out.println(obj);
+    }
+}
+</code></pre>
+<h3 id="2_2">2. 注意点</h3>
+<pre><code class="language-java">//注意点1：编译错误：不能用在泛型方法声明上，返回值类型前面&lt;&gt;不能使用?
+public static &lt;?&gt; void test(ArrayList&lt;?&gt; list){
+
+}
+
+//注意点2：编译错误：不能用在泛型类的声明上
+class GenericTypeClass&lt;?&gt;{
+
+}
+
+//注意点3：编译错误：不能用在创建对象上，右边属于创建集合对象
+ArrayList&lt;&gt; list2 new ArrayList&lt;?&gt;();
+</code></pre>
+<h3 id="3_2">3. 有限制的通配符</h3>
+<ul>
+<li>
+<p>&lt;?&gt;：允许所有泛型的引用调用</p>
+</li>
+<li>
+<p>通配符指定上限</p>
+</li>
+</ul>
+<p>上限 extends：使用时指定的类型必须是继承某个类，或者实现某个接口，即 &lt;=</p>
+<ul>
+<li>通配符指定下限</li>
+</ul>
+<p>下限 super：使用时指定的类型不能小于操作的类，即 &gt;=</p>
+<ul>
+<li>
+<p>举例：</p>
+</li>
+<li>
+<p>&lt;?extends Number&gt;（无穷小， Number]</p>
+<p>只允许泛型为 Number 及 Number 子类的引用调用</p>
+</li>
+<li>
+<p>&lt;?super Number&gt;[Number，无穷大）</p>
+<p>只允许泛型为 Number 及 Number 父类的引用调用</p>
+</li>
+<li>
+<p>&lt;? extends Comparable&gt;</p>
+<p>只允许泛型为实现 Comparable 接口的实现类的引用调用</p>
+</li>
+</ul>
+<p>代码示例：</p>
+<pre><code class="language-java">@Test
+public void test4(){
+
+    List&lt;? extends Person&gt; list1 = null;
+    List&lt;? super Person&gt; list2 = null;
+
+    List&lt;Student&gt; list3 = new ArrayList&lt;Student&gt;();
+    List&lt;Person&gt; list4 = new ArrayList&lt;Person&gt;();
+    List&lt;Object&gt; list5 = new ArrayList&lt;Object&gt;();
+
+    list1 = list3;
+    list1 = list4;
+    //        list1 = list5;
+
+    //        list2 = list3;
+    list2 = list4;
+    list2 = list5;
+
+    //读取数据：
+    list1 = list3;
+    Person p = list1.get(0);
+    //编译不通过
+    //Student s = list1.get(0);
+
+    list2 = list4;
+    Object obj = list2.get(0);
+    ////编译不通过
+    //        Person obj = list2.get(0);
+
+    //写入数据：
+    //编译不通过
+    //        list1.add(new Student());
+
+    //编译通过
+    list2.add(new Person());
+    list2.add(new Student());
+
+}
+</code></pre>
+<p>全文完</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Java%E4%B9%8B%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%92%8C%E6%B3%A8%E8%A7%A3/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Java之枚举类和注解" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              Java之枚举类和注解
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Java%E4%B9%8B%E7%BB%86%E8%AF%B4%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%89%E5%A4%A7%E7%89%B9%E5%BE%81/" class="md-footer__link md-footer__link--next" aria-label="下一页: Java之细说面向对象三大特征" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              Java之细说面向对象三大特征
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
